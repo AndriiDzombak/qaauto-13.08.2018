@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="RunAll Test" parallel="tests" thread-count="1">
+<suite name="Suit">
 
     <test name="Linkedin">
         <classes>
-            <class name="LinkedinLoginTest" />
+            <class name="LinkedinLoginTest">
+            <methods>
+                <include name="negativeLoginTest" />
+                <exclude name="successfulLoginTest" />
+                <include name="negativeEmailLoginTest" />
+                <include name="negativePswLoginTest" />
+            </methods>
+            </class>
         </classes>
     </test>
+
 
 </suite>
