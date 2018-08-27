@@ -19,11 +19,13 @@ import static java.lang.Thread.sleep;
 public class LinkedinLoginTest {
 
     WebDriver driver;
+    LinkedinLoginPage linkedinLoginPage;
 
     @BeforeMethod
     public void setUp(){
         driver = new ChromeDriver();
         driver.get("https://www.linkedin.com/");
+        linkedinLoginPage = new LinkedinLoginPage(driver);
     }
 
     @AfterMethod
@@ -42,51 +44,38 @@ public class LinkedinLoginTest {
         //myqabox@gmail.com
         //qualityassurance123
 
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/","Login page URL is wrong");
-        Assert.assertEquals(driver.getTitle(), "Linkedin","Login page Title is wrong");
+
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
 
         WebDriverWait wait = new WebDriverWait(driver,30);
-        WebElement userEmail = driver.findElement(By.xpath("//input[@id='login-email']"));
-        WebElement userPassword = driver.findElement(By.xpath("//input[@id='login-password']"));
-        WebElement signInBtn = driver.findElement(By.xpath("//input[@id='login-submit']"));
 
-        wait.until(ExpectedConditions.visibilityOf(signInBtn));
-        Assert.assertTrue(userEmail.isDisplayed(), "email input form does not exist");
+        linkedinLoginPage.logIn("myqabox@gmail.com","qualityassurance123");
 
-        userEmail.sendKeys("myqabox@gmail.com");
-        userPassword.sendKeys("qualityassurance123");
-        signInBtn.click();
+ //       wait.until(ExpectedConditions.visibilityOf(linkedinLoginPage.signInBtn));
+//        Assert.assertTrue(linkedinLoginPage.userEmailField.isDisplayed(), "email input form does not exist");
 
-        WebElement profileName = driver.findElement(By.xpath("//span[text()='Andrii Koshman']"));
-        WebElement profileNavItem = driver.findElement(By.xpath("li[@id='profile-nav-item']"));
-        Assert.assertTrue(profileNavItem.isDisplayed(), "profileNavItem does not exist");
-        try{
-            Assert.assertTrue(profileName.isDisplayed(), "Such Profile does not exist");
-        }catch (NoSuchElementException e){
-            System.out.println("No such element");
-        }
+ //       WebElement profileName = driver.findElement(By.xpath("//span[text()='Andrii Koshman']"));
+ //       WebElement profileNavItem = driver.findElement(By.xpath("li[@id='profile-nav-item']"));
+//        Assert.assertTrue(profileNavItem.isDisplayed(), "profileNavItem does not exist");
+//        try{
+//            Assert.assertTrue(profileName.isDisplayed(), "Such Profile does not exist");
+//        }catch (NoSuchElementException e){
+//            System.out.println("No such element");
+//        }
 
     }
 
     @Test
     public void negativeLoginTest(){
 
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/","Login page URL is wrong");
-        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page Title is wrong");
-
-        WebDriverWait wait = new WebDriverWait(driver,30);
-        WebElement userEmail = driver.findElement(By.xpath("//input[@id='login-email']"));
-        WebElement userPassword = driver.findElement(By.xpath("//input[@id='login-password']"));
-        WebElement signInBtn = driver.findElement(By.xpath("//input[@id='login-submit']"));
+        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(driver);
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
         WebElement cookiePolicy = driver.findElement(By.xpath("//button[@id='dismiss-alert']"));
 
-        wait.until(ExpectedConditions.visibilityOf(signInBtn));
-        Assert.assertTrue(userEmail.isDisplayed(), "email input form does not exist");
+//        wait.until(ExpectedConditions.visibilityOf(signInBtn));
+//        Assert.assertTrue(userEmail.isDisplayed(), "email input form does not exist");
         cookiePolicy.click();
-
-        userEmail.sendKeys("a@b.c");
-        userPassword.sendKeys("inva");
-        signInBtn.click();
+        linkedinLoginPage.logIn("a@b.c","inval");
 
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/uas/login-submit","Login page URL is wrong");
         Assert.assertEquals(driver.getTitle(), "Sign In to LinkedIn","Login page Title is wrong");
@@ -94,13 +83,8 @@ public class LinkedinLoginTest {
         WebElement alertMessage = driver.findElement(By.xpath("//div[@role='alert']"));
         WebElement alertEmailMessage = driver.findElement(By.xpath("//span[@id='session_key-login-error']"));
         WebElement alertPswMessage = driver.findElement(By.xpath("//span[@id='session_password-login-error']"));
-        wait.until(ExpectedConditions.visibilityOf(alertMessage));
+//        wait.until(ExpectedConditions.visibilityOf(alertMessage));
 
-        try {
-            sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         Assert.assertEquals(alertMessage.getText(),"There were one or more errors in your submission. Please correct the marked fields below.","Alert message text does not match");
         Assert.assertEquals(alertEmailMessage.getText(),"Please enter a valid email address.");
