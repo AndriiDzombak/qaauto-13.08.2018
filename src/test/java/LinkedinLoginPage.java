@@ -1,28 +1,34 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 import static java.lang.Thread.sleep;
 
 public class LinkedinLoginPage {
 
     private WebDriver driver;
+
+    @FindBy(xpath = "//input[@id='login-email']")
     private WebElement userEmailField;
+
+    @FindBy(xpath = "//input[@id='login-password']")
     private WebElement userPasswordField;
+
+    @FindBy(xpath = "//input[@id='login-submit']")
     private WebElement signInBtn;
+
+    @FindBy(xpath = "//button[@id='dismiss-alert']")
     private WebElement cookieMessage;
 
     public LinkedinLoginPage(WebDriver driver) {
         this.driver = driver;
-        initElements();
+        PageFactory.initElements(driver, this);
     }
-    private void initElements() {
-        userEmailField = driver.findElement(By.xpath("//input[@id='login-email']"));
-        userPasswordField = driver.findElement(By.xpath("//input[@id='login-password']"));
-        signInBtn = driver.findElement(By.xpath("//input[@id='login-submit']"));
-        cookieMessage = driver.findElement(By.xpath("//button[@id='dismiss-alert']"));
-}
 
-    public void logIn(String userEmail, String userPassword){
+
+    public <T> T logIn(String userEmail, String userPassword) {
+
         cookieMessage.click();
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
@@ -33,7 +39,16 @@ public class LinkedinLoginPage {
             e.printStackTrace();
         }
 
+        if (getCurrentUrl().contains("/feed")) {
+            return (T) new LinkedinHomePage(driver);
+        } else if (getCurrentUrl().contains("/login-submit")) {
+            return (T) new LinkedinSubmitPage(driver);
+        } else {
+            return (T) this;
+//          return (T) PageFactory.initElements(driver, LinkedinLoginPage.class);
+        }
     }
+
     public String getCurrentUrl(){
         return driver.getCurrentUrl();
     }

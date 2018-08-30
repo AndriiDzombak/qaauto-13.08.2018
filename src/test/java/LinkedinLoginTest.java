@@ -4,6 +4,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LinkedinLoginTest {
@@ -12,6 +13,7 @@ public class LinkedinLoginTest {
     ChromeOptions chromeOptions;
     LinkedinLoginPage linkedinLoginPage;
     LinkedinHomePage linkedinHomePage;
+    LinkedinSubmitPage linkedinSubmitPage;
 
     @BeforeMethod
     public void setUp(){
@@ -28,14 +30,19 @@ public class LinkedinLoginTest {
       driver.quit();
     }
 
-    @Test
-    public void successfulLoginTest(){
-        //myqabox@gmail.com
-        //qualityassurance123
+    @DataProvider
+    public Object[][] validDataProvider() {
+        return new Object[][]{
+                {"myqabox@gmail.com", "qualityassurance123" },
+                {"Myqabox@gmail.com", "qualityassurance123" }
+        };
+    }
+
+    @Test(dataProvider = "validDataProvider")
+    public void successfulLoginTest(String userEmail,String userPsw){
 
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        linkedinLoginPage.logIn("myqabox@gmail.com","qualityassurance123");
-        linkedinHomePage = new LinkedinHomePage(driver);
+        linkedinHomePage = linkedinLoginPage.logIn(userEmail,userPsw);
         Assert.assertTrue(linkedinHomePage.isPageLoaded(),"Home page is not loaded");
     }
 
@@ -46,8 +53,7 @@ public class LinkedinLoginTest {
         String pswAlertMsg = "The password you provided must have at least 6 characters.";
 
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        linkedinLoginPage.logIn("a@b.c","inva");
-        LinkedinSubmitPage linkedinSubmitPage = new LinkedinSubmitPage(driver);
+        linkedinSubmitPage = linkedinLoginPage.logIn("a@b.c","inva");
         Assert.assertTrue(linkedinSubmitPage.isPageLoaded(),"Login-sumit page is not loaded");
         Assert.assertTrue(linkedinSubmitPage.checkAlertMessages(emailAlertMsg,pswAlertMsg),"Alert message does not match");
 
@@ -59,8 +65,7 @@ public class LinkedinLoginTest {
         String emailAlertMsg = "Hmm, we don't recognize that email. Please try again.";
 
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        linkedinLoginPage.logIn("a@b.com","invalid");
-        LinkedinSubmitPage linkedinSubmitPage = new LinkedinSubmitPage(driver);
+        linkedinSubmitPage = linkedinLoginPage.logIn("a@b.com","invalid");
         Assert.assertTrue(linkedinSubmitPage.isPageLoaded(),"Login-sumit page is not loaded");
         Assert.assertTrue(linkedinSubmitPage.checkAlertMessage(emailAlertMsg,"email"));
 
@@ -83,7 +88,7 @@ public class LinkedinLoginTest {
     public void negativeEmptyLoginTest(){
 
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        linkedinLoginPage.logIn("","");
+        linkedinLoginPage = linkedinLoginPage.logIn("","");
         Assert.assertFalse(linkedinLoginPage.getSignInBtn().isEnabled(),"Sign in button is still enabled");
     }
 }

@@ -7,11 +7,11 @@
         <classes>
             <class name="LinkedinLoginTest">
             <methods>
+                <include name="successfulLoginTest" />
                 <exclude name="negativeLoginTest" />
-                <exclude name="successfulLoginTest" />
                 <exclude name="negativeEmailLoginTest" />
                 <exclude name="negativePswLoginTest" />
-                <include name="negativeEmptyLoginTest"/>
+                <exclude name="negativeEmptyLoginTest"/>
             </methods>
             </class>
         </classes>
