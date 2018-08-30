@@ -8,9 +8,10 @@
             <class name="LinkedinLoginTest">
             <methods>
                 <exclude name="negativeLoginTest" />
-                <include name="successfulLoginTest" />
+                <exclude name="successfulLoginTest" />
                 <exclude name="negativeEmailLoginTest" />
                 <exclude name="negativePswLoginTest" />
+                <include name="negativeEmptyLoginTest"/>
             </methods>
             </class>
         </classes>
