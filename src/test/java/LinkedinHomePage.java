@@ -5,9 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
-public class LinkedinHomePage {
-
-    private WebDriver driver;
+public class LinkedinHomePage extends LinkedinBasePage {
 
     @FindBy(xpath = "//span[text()='Welcome, Andrii!']")
     private WebElement profileName;
@@ -20,14 +18,6 @@ public class LinkedinHomePage {
         PageFactory.initElements(driver,this);
     }
 
-
-    public String getCurrentUrl(){
-        return driver.getCurrentUrl();
-    }
-
-    public String getCurrentTitle(){
-        return driver.getTitle();
-    }
     public boolean isPageLoaded(){
 
         try {

@@ -27,7 +27,7 @@ public class LinkedinLoginTest {
 
     @AfterMethod
     public void aftermethod(){
-      driver.quit();
+        driver.quit();
     }
 
     @DataProvider
@@ -60,11 +60,25 @@ public class LinkedinLoginTest {
     public void negativeLoginTest(String userEmail,String userPsw,String emailAlertMsg,String pswAlertMsg, String inputName){
 
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        if(!userEmail.equals("")) {
-        linkedinSubmitPage = linkedinLoginPage.logIn(userEmail,userPsw);
+        if(inputName.equals("email&password")) {
+            linkedinSubmitPage = linkedinLoginPage.logIn(userEmail,userPsw);
             Assert.assertTrue(linkedinSubmitPage.isPageLoaded(), "Login-sumit page is not loaded");
-            Assert.assertTrue(linkedinSubmitPage.checkAlertMessages(emailAlertMsg, pswAlertMsg, inputName), "Alert message does not match");
-        }else {
+            Assert.assertTrue(linkedinSubmitPage.checkCommonAlertMessage());
+            Assert.assertEquals(linkedinSubmitPage.getAlertMessages(inputName),emailAlertMsg + " " + pswAlertMsg, "Email or Password alert message does not match");
+        }
+        else if(inputName.equals("email")){
+            linkedinSubmitPage = linkedinLoginPage.logIn(userEmail,userPsw);
+            Assert.assertTrue(linkedinSubmitPage.isPageLoaded(), "Login-sumit page is not loaded");
+            Assert.assertTrue(linkedinSubmitPage.checkCommonAlertMessage());
+            Assert.assertEquals(linkedinSubmitPage.getAlertMessages(inputName),emailAlertMsg, "Email alert message does not match");
+        }
+        else if(inputName.equals("password")){
+            linkedinSubmitPage = linkedinLoginPage.logIn(userEmail,userPsw);
+            Assert.assertTrue(linkedinSubmitPage.isPageLoaded(), "Login-sumit page is not loaded");
+            Assert.assertTrue(linkedinSubmitPage.checkCommonAlertMessage());
+            Assert.assertEquals(linkedinSubmitPage.getAlertMessages(inputName),pswAlertMsg, "Password alert message does not match");
+        }
+            else {
             linkedinLoginPage.logIn(userEmail,userPsw);
             Assert.assertTrue(!linkedinLoginPage.getSignInBtn().isEnabled(),"Sign in button is still enabled");
         }

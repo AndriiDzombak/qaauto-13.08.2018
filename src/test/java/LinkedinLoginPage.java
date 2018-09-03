@@ -5,9 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
-public class LinkedinLoginPage {
-
-    private WebDriver driver;
+public class LinkedinLoginPage extends LinkedinBasePage {
 
     @FindBy(xpath = "//input[@id='login-email']")
     private WebElement userEmailField;
@@ -49,13 +47,6 @@ public class LinkedinLoginPage {
         }
     }
 
-    public String getCurrentUrl(){
-        return driver.getCurrentUrl();
-    }
-
-    public String getCurrentTitle(){
-        return driver.getTitle();
-    }
     public boolean isPageLoaded(){
         try {
             sleep(500);
