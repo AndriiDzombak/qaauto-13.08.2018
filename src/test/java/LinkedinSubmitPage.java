@@ -1,25 +1,27 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
 public class LinkedinSubmitPage {
     private WebDriver driver;
+
+    @FindBy(xpath = "//div[@role='alert']")
     private WebElement alertMessage;
+
+    @FindBy(xpath = "//span[@id='session_key-login-error']")
     private WebElement alertEmailMessage;
+
+    @FindBy(xpath = "//span[@id='session_password-login-error']")
     private WebElement alertPswMessage;
 
     public LinkedinSubmitPage(WebDriver driver) {
         this.driver = driver;
-        initElements();
+        PageFactory.initElements(driver,this);
     }
 
-    private void initElements() {
-        alertMessage = driver.findElement(By.xpath("//div[@role='alert']"));
-        alertEmailMessage = driver.findElement(By.xpath("//span[@id='session_key-login-error']"));
-        alertPswMessage = driver.findElement(By.xpath("//span[@id='session_password-login-error']"));
-    }
 
     public String getCurrentUrl(){
         return driver.getCurrentUrl();
@@ -42,36 +44,32 @@ public class LinkedinSubmitPage {
 
     }
 
-    public boolean checkAlertMessages(String emailMsg, String passwordMsg){
+    public boolean checkAlertMessages(String emailMsg, String passwordMsg, String inputFieldType){
 
+        String actualEmailMsg;
+        String actualPswMsg;
         try {
             sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        return alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
-                && alertEmailMessage.getText().equals(emailMsg)
-                && alertPswMessage.getText().equals(passwordMsg);
-
-    }
-
-    public boolean checkAlertMessage(String expectedMsg, String inputFieldName){
-
-        String actualMsg;
-        try {
-            sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(inputFieldType.contains("email")){
+            actualEmailMsg = alertEmailMessage.getText();
+            return alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
+                    && actualEmailMsg.equals(emailMsg);
         }
-        if(inputFieldName.contains("email")){
-             actualMsg = alertEmailMessage.getText();
-        } else {
-            actualMsg = alertPswMessage.getText();
+        else if(inputFieldType.contains("password")){
+            actualPswMsg = alertPswMessage.getText();
+            return alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
+                    && actualPswMsg.equals(passwordMsg);
         }
-
-        return alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
-                && actualMsg.equals(expectedMsg);
+            else {
+            actualEmailMsg = alertEmailMessage.getText();
+            actualPswMsg = alertPswMessage.getText();
+            return alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
+                    && actualEmailMsg.equals(emailMsg)
+                    && actualPswMsg.equals(passwordMsg);
+        }
 
     }
 }

@@ -46,49 +46,29 @@ public class LinkedinLoginTest {
         Assert.assertTrue(linkedinHomePage.isPageLoaded(),"Home page is not loaded");
     }
 
-    @Test
-    public void negativeLoginTest(){
+    @DataProvider
+    public Object[][] negativeDataProvider() {
+        return new Object[][]{
+                {"a@b.c", "inva", "Please enter a valid email address.", "The password you provided must have at least 6 characters.", "email&password" },//invalid user email and user password
+                {"a@b.com", "invalid", "Hmm, we don't recognize that email. Please try again.", "",  "email" },//invalid user email
+                {"myqabox@gmail.com", "invalid", "", "Hmm, that's not the right password. Please try again or request a new one.", "password" },//invalid user password
+                {"", "", "" ,"", ""}//emty user email and user password
+        };
+    }
 
-        String emailAlertMsg = "Please enter a valid email address.";
-        String pswAlertMsg = "The password you provided must have at least 6 characters.";
+    @Test(dataProvider = "negativeDataProvider")
+    public void negativeLoginTest(String userEmail,String userPsw,String emailAlertMsg,String pswAlertMsg, String inputName){
 
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        linkedinSubmitPage = linkedinLoginPage.logIn("a@b.c","inva");
-        Assert.assertTrue(linkedinSubmitPage.isPageLoaded(),"Login-sumit page is not loaded");
-        Assert.assertTrue(linkedinSubmitPage.checkAlertMessages(emailAlertMsg,pswAlertMsg),"Alert message does not match");
+        if(!userEmail.equals("")) {
+        linkedinSubmitPage = linkedinLoginPage.logIn(userEmail,userPsw);
+            Assert.assertTrue(linkedinSubmitPage.isPageLoaded(), "Login-sumit page is not loaded");
+            Assert.assertTrue(linkedinSubmitPage.checkAlertMessages(emailAlertMsg, pswAlertMsg, inputName), "Alert message does not match");
+        }else {
+            linkedinLoginPage.logIn(userEmail,userPsw);
+            Assert.assertTrue(!linkedinLoginPage.getSignInBtn().isEnabled(),"Sign in button is still enabled");
+        }
 
     }
 
-    @Test
-    public void negativeEmailLoginTest(){
-
-        String emailAlertMsg = "Hmm, we don't recognize that email. Please try again.";
-
-        Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        linkedinSubmitPage = linkedinLoginPage.logIn("a@b.com","invalid");
-        Assert.assertTrue(linkedinSubmitPage.isPageLoaded(),"Login-sumit page is not loaded");
-        Assert.assertTrue(linkedinSubmitPage.checkAlertMessage(emailAlertMsg,"email"));
-
-    }
-
-    @Test
-    public void negativePswLoginTest(){
-
-        String pswAlertMsg = "Hmm, that's not the right password. Please try again or request a new one.";
-
-        Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        linkedinLoginPage.logIn("myqabox@gmail.com","invalid");
-        LinkedinSubmitPage linkedinSubmitPage = new LinkedinSubmitPage(driver);
-        Assert.assertTrue(linkedinSubmitPage.isPageLoaded(),"Login-sumit page is not loaded");
-        Assert.assertTrue(linkedinSubmitPage.checkAlertMessage(pswAlertMsg,"password"));
-
-    }
-
-    @Test
-    public void negativeEmptyLoginTest(){
-
-        Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
-        linkedinLoginPage = linkedinLoginPage.logIn("","");
-        Assert.assertFalse(linkedinLoginPage.getSignInBtn().isEnabled(),"Sign in button is still enabled");
-    }
 }

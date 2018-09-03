@@ -1,24 +1,25 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
 public class LinkedinHomePage {
 
     private WebDriver driver;
+
+    @FindBy(xpath = "//span[text()='Welcome, Andrii!']")
     private WebElement profileName;
+
+    @FindBy(xpath = "//li[@id='profile-nav-item']")
     private WebElement profileNavItem;
 
     public LinkedinHomePage(WebDriver driver) {
         this.driver = driver;
-        initElements();
+        PageFactory.initElements(driver,this);
     }
 
-    private void initElements() {
-        profileName = driver.findElement(By.xpath("//span[text()='Welcome, Andrii!']"));
-        profileNavItem = driver.findElement(By.xpath("//li[@id='profile-nav-item']"));
-    }
 
     public String getCurrentUrl(){
         return driver.getCurrentUrl();
