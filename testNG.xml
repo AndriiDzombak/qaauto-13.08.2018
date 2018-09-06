@@ -5,10 +5,9 @@
 
     <test name="Linkedin">
         <classes>
-            <class name="LinkedinLoginTest">
+            <class name="LinkedinSearchTest">
             <methods>
-                <exclude name="successfulLoginTest" />
-                <include name="negativeLoginTest" />
+                <include name="successfulSearchTest" />
             </methods>
             </class>
         </classes>

@@ -1,3 +1,4 @@
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,6 +13,9 @@ public class LinkedinHomePage extends LinkedinBasePage {
 
     @FindBy(xpath = "//li[@id='profile-nav-item']")
     private WebElement profileNavItem;
+
+    @FindBy(xpath = "//input[@placeholder and @role='combobox']")
+    private WebElement searchInputField;
 
     public LinkedinHomePage(WebDriver driver) {
         this.driver = driver;
@@ -30,6 +34,18 @@ public class LinkedinHomePage extends LinkedinBasePage {
                 && getCurrentTitle().contains("(1) LinkedIn")
                 && profileName.isDisplayed()
                 && profileNavItem.isDisplayed();
+    }
+
+    public <T> T searchStatement(String statement){
+
+        searchInputField.sendKeys(statement);
+        searchInputField.sendKeys(Keys.ENTER);
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return (T) new LinkedinSearchPage(driver);
     }
 
 }
