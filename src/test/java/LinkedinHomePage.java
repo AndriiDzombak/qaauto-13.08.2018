@@ -8,9 +8,6 @@ import static java.lang.Thread.sleep;
 
 public class LinkedinHomePage extends LinkedinBasePage {
 
-    @FindBy(xpath = "//span[text()='Welcome, Andrii!']")
-    private WebElement profileName;
-
     @FindBy(xpath = "//li[@id='profile-nav-item']")
     private WebElement profileNavItem;
 
@@ -32,7 +29,6 @@ public class LinkedinHomePage extends LinkedinBasePage {
 
         return getCurrentUrl().equals("https://www.linkedin.com/feed/")
                 && getCurrentTitle().contains("(1) LinkedIn")
-                && profileName.isDisplayed()
                 && profileNavItem.isDisplayed();
     }
 

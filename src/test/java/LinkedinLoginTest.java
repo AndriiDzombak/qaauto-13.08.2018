@@ -33,8 +33,8 @@ public class LinkedinLoginTest {
     @DataProvider
     public Object[][] validDataProvider() {
         return new Object[][]{
-                {"myqabox@gmail.com", "qualityassurance123" },
-                {"Myqabox@gmail.com", "qualityassurance123" }
+                {"mineqabox@gmail.com", "qualityassurance123" },
+                {"Mineqabox@gmail.com", "qualityassurance123" }
         };
     }
 
