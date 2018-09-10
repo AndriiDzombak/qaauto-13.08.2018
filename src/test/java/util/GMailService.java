@@ -29,11 +29,11 @@ public class GMailService {
     public static void main(String[] args) {
         String messageSubject = "Lesson 10";
         String messageTo = "postoltest@gmail.com";
-        String messageFrom = "mykola.gladchenko@gmail.com";
+        String messageFrom = "mineqabox@gmail.com";
 
         GMailService gMailService = new GMailService();
         gMailService.connect();
-        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 60);
+        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 180);
         System.out.println("Content: " + message);
     }
 
@@ -41,8 +41,8 @@ public class GMailService {
      * Default util.GMailService constructor with predefined user/pass credentials
      */
     public GMailService(){
-        this.user = "linkedin.tst.yanina@gmail.com";
-        this.pass = "Yanina123";
+        this.user = "mineqabox@gmail.com";
+        this.pass = "qualityassurance123";
     }
 
     /**

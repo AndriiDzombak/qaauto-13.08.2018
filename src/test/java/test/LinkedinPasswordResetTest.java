@@ -1,43 +1,15 @@
-import org.openqa.selenium.By;
+package test;
+
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.*;
 
 import java.util.ArrayList;
-
 import static java.lang.Thread.sleep;
 
-public class LinkedinPasswordResetTest {
-    WebDriver driver;
-    ChromeOptions chromeOptions;
-    LinkedinLoginPage linkedinLoginPage;
-    LinkedinHomePage linkedinHomePage;
-    LinkedinSubmitPage linkedinSubmitPage;
-    LinkedinPasswordResetPage linkedinPasswordResetPage;
-    LinkedinPleaseCheckEmailPage linkedinPleaseCheckEmailPage;
-    LinkedinYourPasswordResetPage linkedinYourPasswordResetPage;
-
-    @BeforeMethod
-    public void setUp(){
-        chromeOptions = new ChromeOptions();
-        chromeOptions.setExperimentalOption("useAutomationExtension",false);
-//        chromeOptions.addArguments("start-maximized");
-        driver = new ChromeDriver(chromeOptions);
-        driver.get("https://www.linkedin.com/");
-        linkedinLoginPage = new LinkedinLoginPage(driver);
-    }
-
-    @AfterMethod
-    public void aftermethod(){
-        //driver.quit();
-    }
+public class LinkedinPasswordResetTest extends LinkedinBaseTest {
 
     @DataProvider
     public Object[][] validDataProvider() {
@@ -52,6 +24,9 @@ public class LinkedinPasswordResetTest {
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
         linkedinPasswordResetPage = linkedinLoginPage.resetPassword();
         Assert.assertTrue(linkedinPasswordResetPage.isPageLoaded());
+
+
+
         linkedinPleaseCheckEmailPage =  linkedinPasswordResetPage.findAccount(userEmail);
         Assert.assertTrue(linkedinPleaseCheckEmailPage.isPageLoaded());
         ((JavascriptExecutor)driver).executeScript("window.open()");

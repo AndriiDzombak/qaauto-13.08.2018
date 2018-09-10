@@ -1,36 +1,14 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+
 import java.util.List;
 
-public class LinkedinSearchTest {
+public class LinkedinSearchTest extends LinkedinBaseTest {
 
-    WebDriver driver;
-    ChromeOptions chromeOptions;
-    LinkedinLoginPage linkedinLoginPage;
-    LinkedinHomePage linkedinHomePage;
-    LinkedinSearchPage linkedinSearchPage;
-
-    @BeforeMethod
-    public void setUp(){
-        chromeOptions = new ChromeOptions();
-        chromeOptions.setExperimentalOption("useAutomationExtension",false);
-        chromeOptions.addArguments("start-maximized");
-        driver = new ChromeDriver(chromeOptions);
-        driver.get("https://www.linkedin.com/");
-        linkedinLoginPage = new LinkedinLoginPage(driver);
-    }
-
-    @AfterMethod
-    public void aftermethod(){
-        driver.quit();
-    }
 
     @DataProvider
     public Object[][] validDataProvider() {

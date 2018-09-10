@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,7 +48,7 @@ public class LinkedinLoginPage extends LinkedinBasePage {
             return (T) new LinkedinSubmitPage(driver);
         } else {
             return (T) this;
-//          return (T) PageFactory.initElements(driver, LinkedinLoginPage.class);
+//          return (T) PageFactory.initElements(driver, page.LinkedinLoginPage.class);
         }
     }
 
