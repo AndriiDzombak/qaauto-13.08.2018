@@ -41,7 +41,7 @@ public class LinkedinYourPasswordResetPage extends LinkedinBasePage{
         confirmPasswordField.sendKeys(confirmPsw);
         submitButton.click();
 
-        return (T) new LinkedinHomePage(driver);
+        return (T) new LinkedinSuccessfulPswChangePage(driver);
     }
 }
 

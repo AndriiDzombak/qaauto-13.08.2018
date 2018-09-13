@@ -24,7 +24,7 @@ public class LinkedinHomePage extends LinkedinBasePage {
     public boolean isPageLoaded(){
 
         try {
-            sleep(500);
+            sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

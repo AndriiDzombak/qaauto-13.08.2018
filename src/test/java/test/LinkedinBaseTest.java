@@ -18,6 +18,7 @@ public class LinkedinBaseTest {
     LinkedinPasswordResetPage linkedinPasswordResetPage;
     LinkedinPleaseCheckEmailPage linkedinPleaseCheckEmailPage;
     LinkedinYourPasswordResetPage linkedinYourPasswordResetPage;
+    LinkedinSuccessfulPswChangePage linkedinSuccessfulPswChangePage;
 
     @BeforeMethod
     public void setUp(){
@@ -33,4 +34,5 @@ public class LinkedinBaseTest {
     public void aftermethod(){
         driver.quit();
     }
+
 }

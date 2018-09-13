@@ -1,15 +1,21 @@
 package page;
 
 import org.openqa.selenium.WebDriver;
+import util.GMailService;
+
 
 public class LinkedinBasePage {
-    protected WebDriver driver;
 
-    public String getCurrentUrl(){
+    protected WebDriver driver;
+    protected GMailService gMailService;
+
+
+    protected String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
-    public String getCurrentTitle() {
+    protected String getCurrentTitle() {
         return driver.getTitle();
     }
+
 }

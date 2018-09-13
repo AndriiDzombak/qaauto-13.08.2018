@@ -1,20 +1,18 @@
 package test;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import page.*;
 
-import java.util.ArrayList;
 import static java.lang.Thread.sleep;
+
 
 public class LinkedinPasswordResetTest extends LinkedinBaseTest {
 
     @DataProvider
     public Object[][] validDataProvider() {
         return new Object[][]{
-                {"mineqabox@gmail.com", "qualityassurance123", "qualityassurance1234" }
+                {"mineqabox@gmail.com", "qualityassurance1", "qualityassurance1" }
         };
     }
 
@@ -25,25 +23,17 @@ public class LinkedinPasswordResetTest extends LinkedinBaseTest {
         linkedinPasswordResetPage = linkedinLoginPage.resetPassword();
         Assert.assertTrue(linkedinPasswordResetPage.isPageLoaded());
 
-
-
         linkedinPleaseCheckEmailPage =  linkedinPasswordResetPage.findAccount(userEmail);
-        Assert.assertTrue(linkedinPleaseCheckEmailPage.isPageLoaded());
-        ((JavascriptExecutor)driver).executeScript("window.open()");
-        try {
-            sleep(20000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Assert.assertTrue(linkedinPleaseCheckEmailPage.isPageLoaded(), "Please check email page is not loaded");
 
-        ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1)); //switches to new tab
-        driver.get("");
-        linkedinYourPasswordResetPage = new LinkedinYourPasswordResetPage(driver);
-        Assert.assertTrue(linkedinYourPasswordResetPage.isPageLoaded());
+        linkedinYourPasswordResetPage = linkedinPleaseCheckEmailPage.navigateToPswReset();
+        Assert.assertTrue(linkedinYourPasswordResetPage.isPageLoaded(),"Your Password reser page is not loaded");
 
-        linkedinHomePage = linkedinYourPasswordResetPage.submitNewPassword(newUserPsw,confirmUserPsw);
-        Assert.assertTrue(linkedinHomePage.isPageLoaded(),"Home page is not loaded");
+        linkedinSuccessfulPswChangePage = linkedinYourPasswordResetPage.submitNewPassword(newUserPsw,confirmUserPsw);
+        Assert.assertTrue(linkedinSuccessfulPswChangePage.isPageLoaded(),"Successful page is not loaded");
+
+        linkedinHomePage = linkedinSuccessfulPswChangePage.goToHome();
+        Assert.assertTrue(linkedinHomePage.isPageLoaded(), "Home page is not loaded");
 
     }
 }
