@@ -36,13 +36,9 @@ public class LinkedinHomePage extends LinkedinBasePage {
 
     public <T> T searchStatement(String statement){
 
-        searchInputField.sendKeys(statement);
-        searchInputField.sendKeys(Keys.ENTER);
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            searchInputField.sendKeys(statement);
+            searchInputField.sendKeys(Keys.ENTER);
+
         return (T) new LinkedinSearchPage(driver);
     }
 

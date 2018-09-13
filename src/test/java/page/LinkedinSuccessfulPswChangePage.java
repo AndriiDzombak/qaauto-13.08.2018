@@ -30,7 +30,7 @@ public class LinkedinSuccessfulPswChangePage extends LinkedinBasePage {
     }
     public LinkedinHomePage goToHome(){
 
-        goHomeButton.click();
+            goHomeButton.click();
 
         return  new LinkedinHomePage(driver);
     }

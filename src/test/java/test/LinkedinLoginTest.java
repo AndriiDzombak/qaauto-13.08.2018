@@ -14,6 +14,20 @@ public class LinkedinLoginTest extends LinkedinBaseTest {
         };
     }
 
+    /**
+     * Verify successful user Login
+     *
+     * Preconditions:
+     * -Open new browser
+     * -Navigate to Linkedin.com
+     *
+     * Scenario:
+     * -Verify that login page is loaded
+     * -Enter userName and password
+     * -Click on 'Sign in' button
+     * -Verify that Home page is loaded
+     *
+     */
     @Test(dataProvider = "validDataProvider")
     public void successfulLoginTest(String userEmail,String userPsw){
 

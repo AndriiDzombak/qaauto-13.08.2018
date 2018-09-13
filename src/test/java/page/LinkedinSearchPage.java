@@ -22,14 +22,10 @@ public class LinkedinSearchPage extends LinkedinBasePage {
     public LinkedinSearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitUntilElementVisable(searchResultsTotal,10);
     }
 
     public boolean isPageLoaded(){
-        try {
-            sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         return getCurrentUrl().contains("/search/results/")
                 && getCurrentTitle().contains("| Search | LinkedIn")
