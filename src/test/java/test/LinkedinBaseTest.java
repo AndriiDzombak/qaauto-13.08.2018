@@ -1,8 +1,10 @@
 package test;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import page.*;
@@ -22,17 +24,18 @@ public class LinkedinBaseTest {
 
     @BeforeMethod
     public void setUp(){
-        chromeOptions = new ChromeOptions();
-        chromeOptions.setExperimentalOption("useAutomationExtension",false);
+        WebDriverManager.firefoxdriver().setup();
+       // chromeOptions = new ChromeOptions();
+       // chromeOptions.setExperimentalOption("useAutomationExtension",false);
 //      chromeOptions.addArguments("start-maximized");
-        driver = new ChromeDriver(chromeOptions);
+        driver = new FirefoxDriver();
         driver.get("https://www.linkedin.com/");
         linkedinLoginPage = new LinkedinLoginPage(driver);
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void aftermethod(){
-        driver.quit();
+       driver.quit();
     }
 
 }

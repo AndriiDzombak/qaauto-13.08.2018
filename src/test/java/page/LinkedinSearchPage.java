@@ -9,7 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
 
 public class LinkedinSearchPage extends LinkedinBasePage {
 
@@ -22,7 +21,7 @@ public class LinkedinSearchPage extends LinkedinBasePage {
     public LinkedinSearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        waitUntilElementVisable(searchResultsTotal,10);
+        assertElementIsVisable(searchResultsTotal,10,"Search page is not loaded");
     }
 
     public boolean isPageLoaded(){

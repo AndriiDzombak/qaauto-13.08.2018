@@ -5,9 +5,9 @@
 
     <test name="Linkedin">
         <classes>
-            <class name="test.LinkedinPasswordResetTest">
+            <class name="test.LinkedinLoginTest">
             <methods>
-                <include name="resetPasswordTest" />
+                <include name="successfulLoginTest" />
             </methods>
             </class>
         </classes>

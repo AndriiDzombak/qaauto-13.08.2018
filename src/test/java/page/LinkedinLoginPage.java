@@ -1,11 +1,12 @@
 package page;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.net.UrlChecker;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static java.lang.Thread.sleep;
 
 /**
  * LinkedinLogin Page object class.
@@ -35,6 +36,7 @@ public class LinkedinLoginPage extends LinkedinBasePage {
     public LinkedinLoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        assertElementIsVisable(signInBtn, 10,"Login page is not loaded");
     }
 
 
@@ -52,15 +54,10 @@ public class LinkedinLoginPage extends LinkedinBasePage {
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInBtn.click();
-        try {
-            sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        if (getCurrentUrl().contains("/feed")) {
+        if (isUrlContains("/feed",5)) {
             return (T) new LinkedinHomePage(driver);
-        } else if (getCurrentUrl().contains("/login-submit")) {
+        } else if (isUrlContains("/login-submit",5)) {
             return (T) new LinkedinSubmitPage(driver);
         } else {
             return (T) this;
@@ -68,29 +65,36 @@ public class LinkedinLoginPage extends LinkedinBasePage {
         }
     }
 
+    /**
+     * Checks if LinkedinLoginPage has been loaded
+     *
+     * @return true - loaded, false - not loaded
+     */
     public boolean isPageLoaded(){
-        try {
-            sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         return getCurrentUrl().equals("https://www.linkedin.com/")
             && getCurrentTitle().equals("LinkedIn: Log In or Sign Up")
             && signInBtn.isDisplayed();
     }
 
+    /**
+     * Method for returning private WebElement signInBtn
+     *
+     * @return
+     */
     public WebElement getSignInBtn() {
         return signInBtn;
     }
 
+    /**
+     * User navigates to Linkedin Password Reset Page
+     *
+     * @param <T> generic type to return different PageObjects
+     * @return one corresponding PageObject: LinkedinPasswordResetPage
+     */
     public <T> T resetPassword(){
         forgetPasswordLink.click();
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         return (T) new LinkedinPasswordResetPage(driver);
     }
  }

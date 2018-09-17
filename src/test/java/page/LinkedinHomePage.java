@@ -6,8 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static java.lang.Thread.sleep;
 
+/**
+ * LinkedinHome Page object class.
+ */
 public class LinkedinHomePage extends LinkedinBasePage {
 
     @FindBy(xpath = "//li[@id='profile-nav-item']")
@@ -16,24 +18,36 @@ public class LinkedinHomePage extends LinkedinBasePage {
     @FindBy(xpath = "//input[@placeholder and @role='combobox']")
     private WebElement searchInputField;
 
+    /**
+     * Constructor for LinkedinHomePage
+     *
+     * @param driver - driver instance from tests
+     */
     public LinkedinHomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
+        assertElementIsVisable(searchInputField, 10,"Home page is not loaded");
     }
 
+    /**
+     * Checks if LinkedinHomePage has been loaded
+     *
+     * @return true - loaded, false - not loaded
+     */
     public boolean isPageLoaded(){
 
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         return getCurrentUrl().equals("https://www.linkedin.com/feed/")
-                && getCurrentTitle().contains("(1) LinkedIn")
-                && profileNavItem.isDisplayed();
+                && getCurrentTitle().contains("LinkedIn")
+                && searchInputField.isDisplayed();
     }
 
+    /**
+     * User login by username/password
+     *
+     * @param statement - String with search term
+     * @param <T> - generic type to return different PageObjects
+     * @return corresponding PageObject: LinkedinSearchPage
+     */
     public <T> T searchStatement(String statement){
 
             searchInputField.sendKeys(statement);

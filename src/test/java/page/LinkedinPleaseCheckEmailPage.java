@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.lang.Thread.sleep;
 
 public class LinkedinPleaseCheckEmailPage extends LinkedinBasePage {
 
@@ -30,15 +29,11 @@ public class LinkedinPleaseCheckEmailPage extends LinkedinBasePage {
         this.driver = driver;
         this.gMailService = gMailService;
         PageFactory.initElements(driver,this);
+        assertElementIsVisable(resendUrlButton,10,"Please check email page is not loaded");
         message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 120);
     }
 
     public boolean isPageLoaded(){
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         return getCurrentUrl().contains("/request-password-reset-submit")
                 && getCurrentTitle().equals("Please check your mail for reset password link. | LinkedIn")

@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import util.GMailService;
 
-import static java.lang.Thread.sleep;
 
 public class LinkedinPasswordResetPage extends LinkedinBasePage {
 
@@ -19,14 +18,10 @@ public class LinkedinPasswordResetPage extends LinkedinBasePage {
     public LinkedinPasswordResetPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
+        assertElementIsVisable(findAccountButton,10,"Reset Password page is not loaded");
     }
 
     public boolean isPageLoaded(){
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         return getCurrentUrl().contains("/request-password-reset")
                 && getCurrentTitle().equals("Reset Password | LinkedIn");
