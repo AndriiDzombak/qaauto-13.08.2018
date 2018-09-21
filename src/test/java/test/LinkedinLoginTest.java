@@ -52,7 +52,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest {
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
         if(inputName.equals("email&password")) {
             linkedinSubmitPage = linkedinLoginPage.logIn(userEmail,userPsw);
-            Assert.assertTrue(linkedinSubmitPage.isPageLoaded(), "Login-sumit page is not loaded");
+            Assert.assertTrue(linkedinSubmitPage.isPageLoaded(), "Login-submit page is not loaded");
             Assert.assertTrue(linkedinSubmitPage.checkCommonAlertMessage());
             Assert.assertEquals(linkedinSubmitPage.getAlertMessages(inputName),emailAlertMsg + " " + pswAlertMsg, "Email or Password alert message does not match");
         }

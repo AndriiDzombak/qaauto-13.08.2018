@@ -11,6 +11,7 @@ import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.opera.OperaDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import page.*;
 
@@ -30,8 +31,8 @@ public class LinkedinBaseTest {
 
     @BeforeMethod
     @Parameters("browser")
-    public void setUp(String browser) throws Exception {
-        switch (browser) {
+    public void setUp(@Optional("chrome") String browser) throws Exception {
+        switch (browser.toLowerCase()) {
             case "chrome":
                 WebDriverManager.chromedriver().setup();
                 chromeOptions = new ChromeOptions();

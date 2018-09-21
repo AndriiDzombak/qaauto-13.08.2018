@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Suit">
+<suite name="Suit" parallel="tests" thread-count="2">
 
-    <test name="Linkedin">
-        <parameter name="browser" value="chromeK"/>
-        <classes>
-            <class name="test.LinkedinLoginTest">
+    <test  name="LinkedinChrome">
+    <parameter name="browser" value="chrome"/>
+    <classes>
+        <class name="test.LinkedinLoginTest">
             <methods>
                 <include name="successfulLoginTest" />
+                <include name="negativeLoginTest" />
             </methods>
+        </class>
+    </classes>
+    </test>
+    <test name="LinkedinFireFox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="test.LinkedinLoginTest">
+                <methods>
+                    <include name="successfulLoginTest" />
+                    <include name="negativeLoginTest" />
+                </methods>
             </class>
         </classes>
     </test>
