@@ -4,6 +4,7 @@
 <suite name="Suit">
 
     <test name="Linkedin">
+        <parameter name="browser" value="chromeK"/>
         <classes>
             <class name="test.LinkedinLoginTest">
             <methods>

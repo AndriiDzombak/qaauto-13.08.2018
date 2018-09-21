@@ -4,15 +4,21 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.opera.OperaDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import page.*;
 
 public class LinkedinBaseTest {
 
     WebDriver driver;
     ChromeOptions chromeOptions;
+    InternetExplorerOptions internetExplorerOptions;
     LinkedinLoginPage linkedinLoginPage;
     LinkedinHomePage linkedinHomePage;
     LinkedinSubmitPage linkedinSubmitPage;
@@ -23,19 +29,46 @@ public class LinkedinBaseTest {
     LinkedinSuccessfulPswChangePage linkedinSuccessfulPswChangePage;
 
     @BeforeMethod
-    public void setUp(){
-        WebDriverManager.firefoxdriver().setup();
-       // chromeOptions = new ChromeOptions();
-       // chromeOptions.setExperimentalOption("useAutomationExtension",false);
-//      chromeOptions.addArguments("start-maximized");
-        driver = new FirefoxDriver();
+    @Parameters("browser")
+    public void setUp(String browser) throws Exception {
+        switch (browser) {
+            case "chrome":
+                WebDriverManager.chromedriver().setup();
+                chromeOptions = new ChromeOptions();
+                chromeOptions.setExperimentalOption("useAutomationExtension", false);
+//              chromeOptions.addArguments("start-maximized");
+                driver = new ChromeDriver(chromeOptions);
+                break;
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
+            case "ie":
+                WebDriverManager.iedriver().setup();
+                internetExplorerOptions = new InternetExplorerOptions();
+                internetExplorerOptions.ignoreZoomSettings();
+                driver = new InternetExplorerDriver(internetExplorerOptions);
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
+            case "opera":
+                WebDriverManager.operadriver().setup();
+                driver = new OperaDriver();
+                break;
+
+            default:
+                throw new Exception("Browser " + browser + " is not supported");
+        }
+
         driver.get("https://www.linkedin.com/");
         linkedinLoginPage = new LinkedinLoginPage(driver);
     }
 
     @AfterMethod(alwaysRun = true)
-    public void aftermethod(){
-       driver.quit();
+    public void aftermethod() {
+        driver.quit();
     }
 
 }

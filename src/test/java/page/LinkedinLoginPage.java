@@ -49,8 +49,9 @@ public class LinkedinLoginPage extends LinkedinBasePage {
      * @return one of corresponding PageObjects: LinkedinHomePage | LinkedinSubmitPage | LinkedinLoginPage
      */
     public <T> T logIn(String userEmail, String userPassword) {
-
-        cookieMessage.click();
+        if(cookieMessage.isEnabled()) {
+            cookieMessage.click();
+        }
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInBtn.click();
