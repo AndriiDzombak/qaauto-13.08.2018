@@ -30,8 +30,8 @@ public class LinkedinBaseTest {
     LinkedinSuccessfulPswChangePage linkedinSuccessfulPswChangePage;
 
     @BeforeMethod
-    @Parameters("browser")
-    public void setUp(@Optional("chrome") String browser) throws Exception {
+    @Parameters({"browser", "environmentUrl"})
+    public void setUp(@Optional("chrome") String browser,@Optional("https://www.linkedin.com/") String environmentUrl) throws Exception {
         switch (browser.toLowerCase()) {
             case "chrome":
                 WebDriverManager.chromedriver().setup();
@@ -63,12 +63,12 @@ public class LinkedinBaseTest {
                 throw new Exception("Browser " + browser + " is not supported");
         }
 
-        driver.get("https://www.linkedin.com/");
+        driver.get(environmentUrl);
         linkedinLoginPage = new LinkedinLoginPage(driver);
     }
 
     @AfterMethod(alwaysRun = true)
-    public void aftermethod() {
+    public void afterMethod() {
         driver.quit();
     }
 

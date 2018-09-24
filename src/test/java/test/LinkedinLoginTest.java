@@ -31,7 +31,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest {
     @Test(dataProvider = "validDataProvider")
     public void successfulLoginTest(String userEmail,String userPsw){
 
-      //  Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(), "Login page is not loaded");
         linkedinHomePage = linkedinLoginPage.logIn(userEmail,userPsw);
         Assert.assertTrue(linkedinHomePage.isPageLoaded(),"Home page is not loaded");
     }

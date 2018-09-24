@@ -2,17 +2,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="Suit" parallel="tests" thread-count="2">
-
+    <parameter name="environmentUrl" value="de.linkedin.com/"/>
     <test  name="LinkedinChrome">
-    <parameter name="browser" value="chrome"/>
-    <classes>
-        <class name="test.LinkedinLoginTest">
-            <methods>
-                <include name="successfulLoginTest" />
-                <include name="negativeLoginTest" />
-            </methods>
-        </class>
-    </classes>
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="test.LinkedinLoginTest">
+                <methods>
+                    <include name="successfulLoginTest" />
+                    <include name="negativeLoginTest" />
+                </methods>
+            </class>
+        </classes>
     </test>
     <test name="LinkedinFireFox">
         <parameter name="browser" value="firefox"/>
@@ -25,6 +25,4 @@
             </class>
         </classes>
     </test>
-
-
 </suite>
