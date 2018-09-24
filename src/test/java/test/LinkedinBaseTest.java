@@ -63,7 +63,12 @@ public class LinkedinBaseTest {
                 throw new Exception("Browser " + browser + " is not supported");
         }
 
-        driver.get(environmentUrl);
+       try {
+            driver.get(environmentUrl);
+       } catch (Exception e){
+            e.fillInStackTrace();
+       }
+
         linkedinLoginPage = new LinkedinLoginPage(driver);
     }
 
