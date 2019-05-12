@@ -14,7 +14,7 @@
             </class>
         </classes>
     </test>
-    <test name="LinkedinFireFox">
+ <!--   <test name="LinkedinFireFox">
         <parameter name="browser" value="firefox"/>
         <classes>
             <class name="test.LinkedinLoginTest">
@@ -25,4 +25,6 @@
             </class>
         </classes>
     </test>
+
+    !-->
 </suite>
